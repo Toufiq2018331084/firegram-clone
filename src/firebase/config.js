@@ -1,23 +1,22 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getStorage} from 'firebase/storage';
-import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import firebase from 'firebase/compat/app';
+import 'firebase/storage';
+import 'firebase/firestore';
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDUaC3BEChCAsgh5f_QzcUCxtIc-8AoKoo",
-  authDomain: "firegram-4d5ae.firebaseapp.com",
-  projectId: "firegram-4d5ae",
-  storageBucket: "firegram-4d5ae.appspot.com",
-  messagingSenderId: "979861471408",
-  appId: "1:979861471408:web:3d8635de5fa42520ccbb75"
+var firebaseConfig = {
+  apiKey: "AIzaSyDLmnoBvnjOQ-AaJgDw1DnVBiTETbcp8LI",
+  authDomain: "the-net-ninja-sandbox.firebaseapp.com",
+  databaseURL: "https://the-net-ninja-sandbox.firebaseio.com",
+  projectId: "the-net-ninja-sandbox",
+  storageBucket: "the-net-ninja-sandbox.appspot.com",
+  messagingSenderId: "485942827092",
+  appId: "1:485942827092:web:1811d9d8f1f5fabcd5b5c1"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const projectStorage = getStorage();
-const projectFirestore = getFirestore();
+firebase.initializeApp(firebaseConfig);
 
-export {projectFirestore, projectStorage};
+const projectStorage = firebase.storage();
+const projectFirestore = firebase.firestore();
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+
+export { projectStorage, projectFirestore, timestamp };
