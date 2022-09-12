@@ -1,22 +1,24 @@
-import firebase from 'firebase/compat/app';
+import { initializeApp } from "firebase/app";
+//import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import 'firebase/firestore';
+import { getStorage } from "firebase/storage";
+import { getFirestore,serverTimestamp } from "firebase/firestore";
 
-var firebaseConfig = {
-  apiKey: "AIzaSyDLmnoBvnjOQ-AaJgDw1DnVBiTETbcp8LI",
-  authDomain: "the-net-ninja-sandbox.firebaseapp.com",
-  databaseURL: "https://the-net-ninja-sandbox.firebaseio.com",
-  projectId: "the-net-ninja-sandbox",
-  storageBucket: "the-net-ninja-sandbox.appspot.com",
-  messagingSenderId: "485942827092",
-  appId: "1:485942827092:web:1811d9d8f1f5fabcd5b5c1"
+const firebaseConfig = {
+  apiKey: "AIzaSyC7gHK1eNpu4_fMrlkU06iY0HHrWRekiek",
+  authDomain: "firegram-eb9af.firebaseapp.com",
+  projectId: "firegram-eb9af",
+  storageBucket: "firegram-eb9af.appspot.com",
+  messagingSenderId: "928685675224",
+  appId: "1:928685675224:web:19210acee3e97f7fc27dad"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const projectStorage = firebase.storage();
-const projectFirestore = firebase.firestore();
-const timestamp = firebase.firestore.FieldValue.serverTimestamp;
-
-export { projectStorage, projectFirestore, timestamp };
+const projectStorage = getStorage(app);
+const projectFirestore = getFirestore(app);
+//const timestamp = app.firestore.FieldValue.serverTimestamp(app);
+export { projectStorage, projectFirestore};
+//export { projectStorage, projectFirestore, timestamp };
