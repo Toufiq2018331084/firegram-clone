@@ -2,8 +2,10 @@ import { async } from '@firebase/util';
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
-import {serverTimestamp} from 'firebase/firestore'
+import {serverTimestamp, collection, addDoc , doc } from 'firebase/firestore'
 import { projectStorage, projectFirestore} from '../firebase/config';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 
 const useStorage = (file) => {
     const [progress, setProgress] = useState(0);
@@ -13,17 +15,12 @@ const useStorage = (file) => {
 
     useEffect( ()=>{
         //references
-        const storageRef = projectStorage.ref(file.name);
-        const collectionRef = projectFirestore.collection('images');
-        storageRef.put(file).on('state_changed',(snap)=>{
-            let percentage = (snap.bytesTransferred/snap.totalBytes)*100;
-            setProgress(percentage);
-        },(err)=>{
-            setError(err);
-        },async()=>{
-            const url = await storageRef.getDownloadURL();
+        const storageRef = ref(projectStorage, file.name);
+        const collectionRef = collection(projectFirestore, 'images');
+        uploadBytes(storageRef, file).then(async (snap)=>{
+            const url = await getDownloadURL(storageRef);
             const createdAt = serverTimestamp();
-            collectionRef.add({url:url, createdAt});
+            addDoc (collection(projectFirestore, 'images'), {url:url, createdAt});
             setUrl(url);
         });
     },[file])
